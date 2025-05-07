@@ -1,4 +1,7 @@
-public class Buy implements Command{
+package Commands;
+
+public class Refund implements Command {
+
     @Override
     public String execute() {
         return "";
@@ -8,4 +11,5 @@ public class Buy implements Command{
     public boolean exit() {
         return false;
     }
+
 }

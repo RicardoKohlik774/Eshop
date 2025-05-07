@@ -1,3 +1,5 @@
+package Console;
+
 public class Admin {
 
     private String name;

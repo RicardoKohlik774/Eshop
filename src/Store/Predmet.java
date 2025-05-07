@@ -1,3 +1,5 @@
+package Store;
+
 public class Predmet {
 
     private int price;
