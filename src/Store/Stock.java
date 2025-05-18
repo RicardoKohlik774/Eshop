@@ -1,8 +1,48 @@
 package Store;
 
+import java.util.ArrayList;
+
 public class Stock {
 
+    private static final ArrayList<Food> jidlo = new ArrayList<>();
+    private static final ArrayList<Obleceni> obleceni = new ArrayList<>();
+    private static final ArrayList<Elektro> elektro = new ArrayList<>();
 
+    /*
+    public void add(Predmet predmet) {
+        if (predmet instanceof Food) {
+            jidlo.add((Food) predmet);
+        } else if (predmet instanceof Obleceni) {
+            obleceni.add((Obleceni) predmet);
+        } else if (predmet instanceof Elektro) {
+            elektro.add((Elektro) predmet);
+        }
+    } */
 
+    public void addElektro(){
+        elektro.add(new Elektro(25,"Sluchatka", true, Typ.APPLIANCE, "5 W/h"));
+        elektro.add(new Elektro(55,"Pracka", true, Typ.APPLIANCE, "20 W/h"));
+    }
+
+    public void addObleceni(){
+        obleceni.add(new Obleceni(22,"Dziny", true, Typ.CLOTHING, "Denim"));
+        obleceni.add(new Obleceni(20,"Tricko", true, Typ.CLOTHING, "cotton"));
+    }
+
+    public void addPotraviny(){
+        jidlo.add(new Food(12,"Milk", true, Typ.FOOD, "15.9.2025"));
+        jidlo.add(new Food(20,"Meat", true, Typ.FOOD, "15.9.2025"));
+    }
+
+    public static ArrayList<Food> getJidlo() {
+        return jidlo;
+    }
+
+    public static ArrayList<Obleceni> getObleceni() {
+        return obleceni;
+    }
+
+    public static ArrayList<Elektro> getElektro() {
+        return elektro;
+    }
 }
-
