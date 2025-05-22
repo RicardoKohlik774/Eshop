@@ -1,9 +1,11 @@
 package Commands;
 
+import Console.Konzole;
+
 public class Refund implements Command {
 
     @Override
-    public String execute() {
+    public String execute(Konzole konzole) {
         return "";
     }
 

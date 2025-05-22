@@ -2,6 +2,7 @@ package Commands;
 
 import java.util.Scanner;
 
+import Console.Konzole;
 import Store.*;
 
 public class Browse implements Command  {
@@ -13,7 +14,7 @@ Scanner sc = new Scanner(System.in);
 
 
     @Override
-    public String execute() {
+    public String execute(Konzole konzole) {
         System.out.println("What would you like to browse?");
         String choice = sc.next();
         if (choice.equalsIgnoreCase("food")) {

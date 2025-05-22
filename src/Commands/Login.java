@@ -1,27 +1,31 @@
 package Commands;
 
+import Console.Konzole;
+
 import java.util.Scanner;
 
 public class Login implements Command {
+    private String id;
+
     @Override
-    public String execute() {
+    public String execute(Konzole konzole) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Zadej sve 8mistne ID: ");
             String input = scanner.nextLine().trim();
+
             if (input.equalsIgnoreCase("exit")) {
-                System.out.println("Prihlaseni bylo zruseno.");
-                break;
+                return "Prihlaseni bylo zruseno.";
             }
 
             if (input.matches("\\d{8}")) {
-                System.out.println("ID nacteno, vitejte.");
-                break;
+                konzole.setLoggedIn(true);
+                id = input;
+                return "ID nacteno, vitejte.";
             } else {
                 System.out.println("Neplatne ID.");
             }
         }
-        return "";
     }
 
     @Override

@@ -1,5 +1,7 @@
 package Commands;
 
+import Console.Konzole;
+
 public class Buy implements Command {
 
 
@@ -7,7 +9,10 @@ public class Buy implements Command {
 
 
     @Override
-    public String execute() {
+    public String execute(Konzole konzole) {
+
+
+
         return "";
     }
 
