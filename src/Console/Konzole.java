@@ -1,8 +1,6 @@
 package Console;
 
-import Commands.Browse;
-import Commands.Command;
-import Commands.Login;
+import Commands.*;
 import Store.*;
 
 import java.util.HashMap;
@@ -14,6 +12,7 @@ public class Konzole {
     private Map<String, Command> commands = new HashMap<>();
     Stock stock = new Stock();
     private boolean isLoggedIn = false;
+    private User loggedUser;
 
 
     public Konzole() {
@@ -27,6 +26,9 @@ public class Konzole {
     public void commandsPut(){
           commands.put("login",new Login());
           commands.put("browse",new Browse());
+          commands.put("buy", new Buy());
+          commands.put("remove", new Remove());
+          commands.put("checkout", new Checkout());
     }
 
     public void executeCommand(String name) {
@@ -42,11 +44,11 @@ public class Konzole {
             System.out.println("Neznamy prikaz: " + name);
         }
     }
-public void start(){
+public void start(){  //FIX THE PRINTS
     System.out.println("Welcome to the Eshop! Please log in using your id.");
-    System.out.println();
+    System.out.println("(login,help)");
 while (true) {
-    System.out.println("(Browse)");
+    System.out.println("(browse,buy,remove,checkout)");
     System.out.print("--> ");
     String input = sc.nextLine();
     if ("exit".equalsIgnoreCase(input)) {
@@ -63,4 +65,14 @@ while (true) {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
+
+
+    public User getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(User user) {
+        this.loggedUser = user;
+    }
+
 }

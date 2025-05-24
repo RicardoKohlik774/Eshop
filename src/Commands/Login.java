@@ -1,6 +1,7 @@
 package Commands;
 
 import Console.Konzole;
+import Console.User;
 
 import java.util.Scanner;
 
@@ -11,19 +12,21 @@ public class Login implements Command {
     public String execute(Konzole konzole) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.print("Zadej sve 8mistne ID: ");
+            System.out.print("Enter your id (8-digits): ");
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("exit")) {
-                return "Prihlaseni bylo zruseno.";
+                return "Login cancelled";
             }
 
             if (input.matches("\\d{8}")) {
                 konzole.setLoggedIn(true);
+                User user = new User(input);
+                konzole.setLoggedUser(user);
                 id = input;
-                return "ID nacteno, vitejte.";
+                return "Access granted, welcome.";
             } else {
-                System.out.println("Neplatne ID.");
+                System.out.println("Invalid ID.");
             }
         }
     }

@@ -8,16 +8,7 @@ public class Stock {
     private static final ArrayList<Obleceni> obleceni = new ArrayList<>();
     private static final ArrayList<Elektro> elektro = new ArrayList<>();
 
-    /*
-    public void add(Predmet predmet) {
-        if (predmet instanceof Food) {
-            jidlo.add((Food) predmet);
-        } else if (predmet instanceof Obleceni) {
-            obleceni.add((Obleceni) predmet);
-        } else if (predmet instanceof Elektro) {
-            elektro.add((Elektro) predmet);
-        }
-    } */
+
 
     public void addElektro(){
         elektro.add(new Elektro(25,"Sluchatka", true, Typ.APPLIANCE, "5 W/h"));
