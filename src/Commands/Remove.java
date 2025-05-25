@@ -31,14 +31,21 @@ public class Remove implements Command {
             return "It seems this product is not in your cart, try again.";
         }
 
-        System.out.print("Are you sure you want to remove '" + remove.getName() + "' from your cart? (y/n): ");
-        String confirm = scanner.nextLine().trim();
+        while (true) {
+            System.out.print("Are you sure you want to remove '" + remove.getName() + "' from your cart? (y/n): ");
+            String confirm = scanner.nextLine().trim();
 
-        if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-            konzole.getLoggedUser().getCart().remove(remove);
-            System.out.println("Product was removed from your cart.");
-        } else {
-            System.out.println("Product was not removed.");
+            if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
+                konzole.getLoggedUser().getCart().remove(remove);
+                System.out.println("Product was removed from your cart.");
+                break;
+            } else if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")) {
+                System.out.println("Product was not removed.");
+                break;
+            } else {
+                System.out.println("Invalid input.");
+                System.out.println();
+            }
         }
 
         System.out.println("Current cart contains:");
@@ -48,6 +55,7 @@ public class Remove implements Command {
 
         return "";
     }
+
 
     @Override
     public boolean exit() {

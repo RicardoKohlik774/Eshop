@@ -25,6 +25,27 @@ public class Stock {
         jidlo.add(new Food(20,"Meat", true, Typ.FOOD, "15.9.2025"));
     }
 
+    public static Predmet Search(String name) {
+        for (Food f : getJidlo()) {
+            if (f.getName().equalsIgnoreCase(name)) {
+                return f;
+            }
+        }
+        for (Obleceni o : getObleceni()) {
+            if (o.getName().equalsIgnoreCase(name)) {
+                return o;
+            }
+        }
+        for (Elektro e : getElektro()) {
+            if (e.getName().equalsIgnoreCase(name)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
+
+
     public static ArrayList<Food> getJidlo() {
         return jidlo;
     }

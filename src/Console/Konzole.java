@@ -29,6 +29,7 @@ public class Konzole {
           commands.put("buy", new Buy());
           commands.put("remove", new Remove());
           commands.put("checkout", new Checkout());
+          commands.put("refill", new Refill());
     }
 
     public void executeCommand(String name) {
@@ -44,11 +45,13 @@ public class Konzole {
             System.out.println("Neznamy prikaz: " + name);
         }
     }
+
+
 public void start(){  //FIX THE PRINTS
     System.out.println("Welcome to the Eshop! Please log in using your id.");
     System.out.println("(login,help)");
 while (true) {
-    System.out.println("(browse,buy,remove,checkout)");
+    System.out.println("(browse,buy,remove,checkout,refill)");
     System.out.print("--> ");
     String input = sc.nextLine();
     if ("exit".equalsIgnoreCase(input)) {
@@ -75,4 +78,7 @@ while (true) {
         this.loggedUser = user;
     }
 
+    public Stock getStock() {
+        return stock;
+    }
 }

@@ -6,6 +6,7 @@ public class Predmet {
     private String name;
     private boolean available;
     private Typ type;
+    private int stock = 1;
 
 
     public Predmet(int price, String name, boolean available, Typ type) {
@@ -31,4 +32,12 @@ public class Predmet {
         return available;
     }
 
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 }
