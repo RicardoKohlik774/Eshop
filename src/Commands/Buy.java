@@ -2,6 +2,7 @@ package Commands;
 
 import Console.Konzole;
 import Store.*;
+import Console.Data;
 
 import java.util.Scanner;
 
@@ -30,7 +31,8 @@ public class Buy implements Command {
             if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
                 konzole.getLoggedUser().addToCart(item);
                 item.setStock(item.getStock() - 1);
-
+                Data.saveStock();
+                Data.save(konzole.getLoggedUser());
                 System.out.println("Your cart now contains:");
                 for (Predmet p : konzole.getLoggedUser().getCart()) {
                     System.out.println("- " + p.getName());

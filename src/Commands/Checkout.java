@@ -1,14 +1,17 @@
 package Commands;
 
+import Console.Data;
 import Console.Konzole;
+import Store.Order;
 import Store.Predmet;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Checkout implements Command {
 
     @Override
-    public String execute(Konzole konzole) {   //REDO THE GENERATIONAL IF ELSE STATEMENTS?
+    public String execute(Konzole konzole) {
         Scanner scanner = new Scanner(System.in);
 
         if (konzole.getLoggedUser().getCart().isEmpty()) {
@@ -47,7 +50,7 @@ public class Checkout implements Command {
                     if (street.equalsIgnoreCase("cancel")) {
                         return "Checkout cancelled. You were not issued any fees";
                     }
-                    if (street.matches("^[A-Za-záčďéěíňóřšťúůýžÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ ]+\\s\\d{3}$")) {
+                    if (street.matches("^[A-Za-z ]+\\s\\d{3}$")) {
                         step++;
                     } else {
                         System.out.println("Invalid steet and house number format.");
@@ -66,7 +69,7 @@ public class Checkout implements Command {
                         step--;
                         break;
                     }
-                    if (city.matches("^[A-Za-záčďéěíňóřšťúůýžÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ\\s-]+$")) {
+                    if (city.matches("^[A-Za-z\\s-]+$")) {
                         step++;
                     } else {
                         System.out.println("Invalid city name.");
@@ -172,13 +175,18 @@ public class Checkout implements Command {
                     System.out.println("Delivery Address: " + street + ", " + city + ", " + postalCode);
                     System.out.println("Payment Method: " + paymentMethod);
                     if (paymentMethod.equals("card")) {
-                        System.out.println("Card number:" + cardNumber);
+                        System.out.println("Card number: " + cardNumber);
                     }
 
                     System.out.print("Do you confirm this order? (y/n): ");
                     String confirm = scanner.nextLine().trim();
                     if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-                        return "Checkout complete. Thank you for your order.";
+                        ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
+                        Order newOrder = new Order(cartItems);                 //BETA LOGIC
+                        konzole.getLoggedUser().addOrder(newOrder);
+                        konzole.getLoggedUser().getCart().clear();
+                        Data.save(konzole.getLoggedUser());
+                        return "Checkout complete. Your items will arrive after a few logins.";
                     } else {
                         return "Checkout cancelled. You were not issued any fees";
                     }
@@ -188,8 +196,6 @@ public class Checkout implements Command {
 
         return "Unexpected error.";
     }
-
-
 
     @Override
     public boolean exit() {

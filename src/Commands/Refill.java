@@ -1,5 +1,6 @@
 package Commands;
 
+import Console.Data;
 import Console.Konzole;
 import Store.*;
 
@@ -43,6 +44,7 @@ public class Refill implements Command {
             String confirmation = sc.nextLine().trim();
             if (confirmation.equalsIgnoreCase("y") || confirmation.equalsIgnoreCase("yes")) {
                 found.setStock(found.getStock() + amountToAdd);
+                Data.saveStock();
                 return "Refill completed. Current stock of " + found.getName() + " is: " + found.getStock();
             } else if (confirmation.equalsIgnoreCase("n") || confirmation.equalsIgnoreCase("no")) {
                 return "Refill was cancelled.";

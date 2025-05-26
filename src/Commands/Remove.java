@@ -1,5 +1,6 @@
 package Commands;
 
+import Console.Data;
 import Console.Konzole;
 import Store.Predmet;
 
@@ -37,6 +38,7 @@ public class Remove implements Command {
 
             if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
                 konzole.getLoggedUser().getCart().remove(remove);
+                Data.save(konzole.getLoggedUser());
                 System.out.println("Product was removed from your cart.");
                 break;
             } else if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")) {

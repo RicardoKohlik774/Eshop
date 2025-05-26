@@ -1,8 +1,10 @@
 package Store;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Elektro extends Predmet {
+public class Elektro extends Predmet implements Serializable {
+    private static final long serialVersionUID = 1L;
 
 private ArrayList<Elektro> spotrebice = new ArrayList<>();
     private String spotreba;

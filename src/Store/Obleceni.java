@@ -1,8 +1,10 @@
 package Store;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Obleceni extends Predmet {
+public class Obleceni extends Predmet implements Serializable {
+    private static final long serialVersionUID = 1L;
 private String material;
     private ArrayList<Obleceni> obleceni = new ArrayList<>();
 

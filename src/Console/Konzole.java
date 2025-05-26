@@ -30,6 +30,7 @@ public class Konzole {
           commands.put("remove", new Remove());
           commands.put("checkout", new Checkout());
           commands.put("refill", new Refill());
+          commands.put("stash", new Stash());
     }
 
     public void executeCommand(String name) {
@@ -51,7 +52,7 @@ public void start(){  //FIX THE PRINTS
     System.out.println("Welcome to the Eshop! Please log in using your id.");
     System.out.println("(login,help)");
 while (true) {
-    System.out.println("(browse,buy,remove,checkout,refill)");
+    System.out.println("(browse,buy,remove,checkout,refill,stash)");
     System.out.print("--> ");
     String input = sc.nextLine();
     if ("exit".equalsIgnoreCase(input)) {

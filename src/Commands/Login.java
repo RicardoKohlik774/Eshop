@@ -1,5 +1,6 @@
 package Commands;
 
+import Console.Data;
 import Console.Konzole;
 import Console.User;
 
@@ -20,16 +21,25 @@ public class Login implements Command {
             }
 
             if (input.matches("\\d{8}")) {
+                User user = Data.load(input);
+                if (user == null) {
+                    user = new User(input);
+                }
+
+                user.login();
+                Data.save(user);
+
                 konzole.setLoggedIn(true);
-                User user = new User(input);
                 konzole.setLoggedUser(user);
                 id = input;
+
                 return "Access granted, welcome.";
             } else {
                 System.out.println("Invalid ID.");
             }
         }
     }
+
 
     @Override
     public boolean exit() {

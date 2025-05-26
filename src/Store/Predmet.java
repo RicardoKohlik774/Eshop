@@ -1,7 +1,9 @@
 package Store;
 
-public class Predmet {
+import java.io.Serializable;
 
+public class Predmet implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int price;
     private String name;
     private boolean available;
