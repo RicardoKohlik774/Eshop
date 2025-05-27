@@ -181,9 +181,9 @@ public class Checkout implements Command {
                     System.out.print("Do you confirm this order? (y/n): ");
                     String confirm = scanner.nextLine().trim();
                     if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-                        ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
-                        Order newOrder = new Order(cartItems);                 //BETA LOGIC
-                        konzole.getLoggedUser().addOrder(newOrder);
+          //              ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
+         //               Order newOrder = new Order(cartItems);
+         //               konzole.getLoggedUser().addOrder(newOrder);
                         konzole.getLoggedUser().getCart().clear();
                         Data.save(konzole.getLoggedUser());
                         return "Checkout complete. Your items will arrive after a few logins.";

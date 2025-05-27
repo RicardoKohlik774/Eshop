@@ -22,21 +22,7 @@ public class User implements Serializable {
   this.id = id;
  }
 
- public void login() {
-  loginCount++;
-  ArrayList<Order> completed = new ArrayList<>();
 
-  for (Order order : orders) {
-   order.tickLogin();
-  }
-  for (Order order : orders) {
-   if (order.isReady()) {
-    owned.add(order.getItems());
-    completed.add(order);
-   }
-  }
-  orders.removeAll(completed);
- }
 
  public void addOrder(Order o) {
   orders.add(o);

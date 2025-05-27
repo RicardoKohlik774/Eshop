@@ -13,24 +13,29 @@ public class Konzole {
     Stock stock = new Stock();
     private boolean isLoggedIn = false;
     private User loggedUser;
+    private boolean isAdmin;
 
 
     public Konzole() {
-       stock.addObleceni();
-       stock.addElektro();
-       stock.addPotraviny();
-        commandsPut();
+        Stock.stockStartup();
         start();
     }
 
-    public void commandsPut(){
-          commands.put("login",new Login());
-          commands.put("browse",new Browse());
-          commands.put("buy", new Buy());
-          commands.put("remove", new Remove());
-          commands.put("checkout", new Checkout());
-          commands.put("refill", new Refill());
-          commands.put("stash", new Stash());
+    public void loginCommandPut() {
+        commands.put("login", new Login());
+    }
+
+    public void userCommandsPut() {
+        commands.put("browse", new Browse());
+        commands.put("buy", new Buy());
+        commands.put("remove", new Remove());
+        commands.put("checkout", new Checkout());
+        commands.put("stash", new Stash());
+    }
+
+    public void adminCommandsPut() {
+        commands.put("refill", new Refill());
+        commands.put("browse", new Browse());
     }
 
     public void executeCommand(String name) {
@@ -48,19 +53,49 @@ public class Konzole {
     }
 
 
-public void start(){  //FIX THE PRINTS
-    System.out.println("Welcome to the Eshop! Please log in using your id.");
-    System.out.println("(login,help)");
-while (true) {
-    System.out.println("(browse,buy,remove,checkout,refill,stash)");
-    System.out.print("--> ");
-    String input = sc.nextLine();
-    if ("exit".equalsIgnoreCase(input)) {
-        break;
+    public void start() {
+        System.out.println("Welcome to the Eshop! Please log in using your id.");
+        System.out.println("(login, help)");
+        loginCommandPut();
+        while (!isLoggedIn) {
+            System.out.print("--> ");
+            String input = sc.nextLine();
+            executeCommand(input);
+        }
+
+        if (isAdmin) {
+            adminCommandsPut();
+            adminInterface();
+        } else {
+            userCommandsPut();
+            userInterface();
+        }
     }
-    executeCommand(input);
-}
-}
+
+    public void userInterface() {
+        while (true) {
+            System.out.println("(browse, buy, remove, checkout, stash)");
+            System.out.print("--> ");
+            String input = sc.nextLine();
+            if ("exit".equalsIgnoreCase(input)) break;
+            executeCommand(input);
+        }
+    }
+
+    public void adminInterface() {
+        while (true) {
+            System.out.println("(refill,browse)");
+            System.out.print("--> ");
+            String input = sc.nextLine();
+            if ("exit".equalsIgnoreCase(input)) break;
+            executeCommand(input);
+        }
+    }
+
+    public void removeCommand(String name) {
+        commands.remove(name);
+    }
+
 
     public boolean isLoggedIn() {
         return isLoggedIn;
@@ -81,5 +116,9 @@ while (true) {
 
     public Stock getStock() {
         return stock;
+    }
+
+    public void setAdmin(boolean admin) {
+      isAdmin = admin;
     }
 }
