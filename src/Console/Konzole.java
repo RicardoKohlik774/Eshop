@@ -31,11 +31,13 @@ public class Konzole {
         commands.put("remove", new Remove());
         commands.put("checkout", new Checkout());
         commands.put("stash", new Stash());
+        commands.put("inbox", new Inbox());
     }
 
     public void adminCommandsPut() {
         commands.put("refill", new Refill());
         commands.put("browse", new Browse());
+        commands.put("update", new Update());
     }
 
     public void executeCommand(String name) {
@@ -74,7 +76,7 @@ public class Konzole {
 
     public void userInterface() {
         while (true) {
-            System.out.println("(browse, buy, remove, checkout, stash)");
+            System.out.println("(browse, buy, remove, checkout, stash, inbox)");
             System.out.print("--> ");
             String input = sc.nextLine();
             if ("exit".equalsIgnoreCase(input)) break;
@@ -84,7 +86,7 @@ public class Konzole {
 
     public void adminInterface() {
         while (true) {
-            System.out.println("(refill,browse)");
+            System.out.println("(refill,browse,update)");
             System.out.print("--> ");
             String input = sc.nextLine();
             if ("exit".equalsIgnoreCase(input)) break;
@@ -120,5 +122,9 @@ public class Konzole {
 
     public void setAdmin(boolean admin) {
       isAdmin = admin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 }

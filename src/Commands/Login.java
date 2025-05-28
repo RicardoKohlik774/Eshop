@@ -3,7 +3,9 @@ package Commands;
 import Console.Data;
 import Console.Konzole;
 import Console.User;
+import Store.Order;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Login implements Command {
@@ -35,7 +37,21 @@ public class Login implements Command {
                         System.out.println("New user detected, Creating a new user...(REMEMBER YOUR ID!): ");
                         user = new User(input);
                     }
+                    ArrayList<Order> remove = new ArrayList<>();
+                    for (Order order : user.getOrders()) {
+                        if (order.getStatus().equals("shipping")) {
+                            if (order.isReadyToDeliver()) {
+                                user.getOwned().add(order.getItems());
+                                remove.add(order);
+                                System.out.println("An order has been delivered and was added to your stash.");
+                            } else {
+                                order.setReadyToDeliver(true);
+                                System.out.println("Your order is being shipped and will arrive the next time you log in.");
+                            }
+                        }
+                    }
 
+                    user.getOrders().removeAll(remove);
                     Data.save(user);
                     konzole.setLoggedIn(true);
                     konzole.setAdmin(false);

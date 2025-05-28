@@ -181,12 +181,12 @@ public class Checkout implements Command {
                     System.out.print("Do you confirm this order? (y/n): ");
                     String confirm = scanner.nextLine().trim();
                     if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-          //              ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
-         //               Order newOrder = new Order(cartItems);
-         //               konzole.getLoggedUser().addOrder(newOrder);
+                       ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
+                        Order newOrder = new Order(cartItems, "This order was cancelled by an admin.");
+                        konzole.getLoggedUser().addOrder(newOrder);
                         konzole.getLoggedUser().getCart().clear();
                         Data.save(konzole.getLoggedUser());
-                        return "Checkout complete. Your items will arrive after a few logins.";
+                        return "Checkout complete. Your order is being processed. Thank you!";
                     } else {
                         return "Checkout cancelled. You were not issued any fees";
                     }
