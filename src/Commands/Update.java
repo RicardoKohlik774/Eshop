@@ -1,7 +1,7 @@
 package Commands;
 
 import Console.Data;
-import Console.Konzole;
+import Console.Console;
 import Console.User;
 import Store.Order;
 
@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class Update implements Command {
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter a user ID which you want to update an order: ");
         String userId = scanner.nextLine().trim();

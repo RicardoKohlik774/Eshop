@@ -1,9 +1,9 @@
 package Commands;
 
 import Console.Data;
-import Console.Konzole;
+import Console.Console;
 import Store.Order;
-import Store.Predmet;
+import Store.Product;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,16 +11,16 @@ import java.util.Scanner;
 public class Checkout implements Command {
 
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
 
-        if (konzole.getLoggedUser().getCart().isEmpty()) {
+        if (console.getLoggedUser().getCart().isEmpty()) {
             return "Your cart is empty.";
         }
 
         int total = 0;
         System.out.println("Your cart contains:");
-        for (Predmet p : konzole.getLoggedUser().getCart()) {
+        for (Product p : console.getLoggedUser().getCart()) {
             System.out.println("- " + p.getName() + " ($" + p.getPrice() + ")");
             total += p.getPrice();
         }
@@ -37,8 +37,8 @@ public class Checkout implements Command {
         String postalCode = "";
         String paymentMethod = "";
         String cardNumber = "";
-        String expirationDate = "";
-        String cvv = "";
+        String expirationDate;   //FOR SOME REASON THERE TWO ARE REDUNDANT TO SET ""
+        String cvv;
 
         int step = 1;
 
@@ -181,12 +181,20 @@ public class Checkout implements Command {
                     System.out.print("Do you confirm this order? (y/n): ");
                     String confirm = scanner.nextLine().trim();
                     if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-                       ArrayList<Predmet> cartItems = new ArrayList<>(konzole.getLoggedUser().getCart());
+                        if (paymentMethod.equals("card")) {
+                            if (console.getLoggedUser().getMoney() < total) {
+                                return "You do not have enough money.";
+                            }
+                            console.getLoggedUser().setMoney(console.getLoggedUser().getMoney() - total);
+                        }
+                        ArrayList<Product> cartItems = new ArrayList<>(console.getLoggedUser().getCart());
                         Order newOrder = new Order(cartItems, "This order was cancelled by an admin.");
-                        konzole.getLoggedUser().addOrder(newOrder);
-                        konzole.getLoggedUser().getCart().clear();
-                        Data.save(konzole.getLoggedUser());
-                        return "Checkout complete. Your order is being processed. Thank you!";
+                        newOrder.setPaymentMethod(paymentMethod);
+                        newOrder.setTotalPrice(total);
+                        console.getLoggedUser().addOrder(newOrder);
+                        console.getLoggedUser().getCart().clear();
+                        Data.save(console.getLoggedUser());
+                        return "Checkout complete. Your order is being processed. Thank you";
                     } else {
                         return "Checkout cancelled. You were not issued any fees";
                     }

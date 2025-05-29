@@ -7,16 +7,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Konzole {
+public class Console {
     Scanner sc = new Scanner(System.in);
-    private Map<String, Command> commands = new HashMap<>();
-    Stock stock = new Stock();
+    private final Map<String, Command> commands = new HashMap<>();
     private boolean isLoggedIn = false;
     private User loggedUser;
     private boolean isAdmin;
 
 
-    public Konzole() {
+    public Console() {
         Stock.stockStartup();
         start();
     }
@@ -99,10 +98,6 @@ public class Konzole {
     }
 
 
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
-
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
@@ -116,15 +111,11 @@ public class Konzole {
         this.loggedUser = user;
     }
 
-    public Stock getStock() {
-        return stock;
-    }
+
 
     public void setAdmin(boolean admin) {
       isAdmin = admin;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
+
 }

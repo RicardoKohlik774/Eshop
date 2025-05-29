@@ -1,7 +1,7 @@
 package Store;
 
-public enum Typ {
+public enum Type {
     FOOD,
     CLOTHING,
-    APPLIANCE,
+    ELECTRO,
 }

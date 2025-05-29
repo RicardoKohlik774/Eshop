@@ -1,24 +1,24 @@
 package Store;
 
+import java.io.Serial;
 import java.io.Serializable;
 
-public class Predmet implements Serializable {
+public class Product implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
-    private int price;
-    private String name;
-    private boolean available;
-    private Typ type;
+    private final int price;
+    private final String name;
+    private final Type type;
     private int stock = 1;
 
 
-    public Predmet(int price, String name, boolean available, Typ type) {
+    public Product(int price, String name, Type type) {
         this.price = price;
         this.name = name;
-        this.available = available;
         this.type = type;
     }
 
-    public Typ getType() {
+    public Type getType() {
         return type;
     }
 
@@ -28,10 +28,6 @@ public class Predmet implements Serializable {
 
     public String getName() {
         return name;
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 
 

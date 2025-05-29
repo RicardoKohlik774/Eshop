@@ -1,10 +1,10 @@
 package Commands;
 
-import Console.Konzole;
+import Console.Console;
 
 public interface Command {
 
-    String execute(Konzole konzole);
+    String execute(Console console);
     boolean exit();
 
 

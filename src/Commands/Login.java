@@ -1,7 +1,7 @@
 package Commands;
 
 import Console.Data;
-import Console.Konzole;
+import Console.Console;
 import Console.User;
 import Store.Order;
 
@@ -9,13 +9,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Login implements Command {
-    private String id;
 
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {           //MIGHT WANNA REWRITE THEM IF ELSE'S NGL
         Scanner scanner = new Scanner(System.in);
         String adminId = "00000000";
-
         while (true) {
             System.out.print("Enter your id (8-digits): ");
             String input = scanner.nextLine().trim();
@@ -26,10 +24,10 @@ public class Login implements Command {
 
             if (input.matches("\\d{8}")) {
                 if (input.equals(adminId)) {
-                    konzole.setLoggedIn(true);
-                    konzole.setAdmin(true);
-                    konzole.setLoggedUser(null);
-                    konzole.removeCommand("login");
+                    console.setLoggedIn(true);
+                    console.setAdmin(true);
+                    console.setLoggedUser(null);
+                    console.removeCommand("login");
                     return "Admin access granted.";
                 } else {
                     User user = Data.load(input);
@@ -41,9 +39,28 @@ public class Login implements Command {
                     for (Order order : user.getOrders()) {
                         if (order.getStatus().equals("shipping")) {
                             if (order.isReadyToDeliver()) {
-                                user.getOwned().add(order.getItems());
-                                remove.add(order);
-                                System.out.println("An order has been delivered and was added to your stash.");
+                                boolean delivered = false;
+                                if (order.getPaymentMethod().equals("cash")) {
+                                    if (user.getMoney() >= order.getTotalPrice()) {
+                                        user.setMoney(user.getMoney() - order.getTotalPrice());
+                                        delivered = true;
+                                    } else {
+                                        Order cancelled = new Order(new ArrayList<>(), "This order was automatically cancelled due to insufficient funds.");
+                                        user.getOrders().add(cancelled);
+                                        remove.add(order);
+                                        user.setMoney(user.getMoney() - order.getTotalPrice());
+                                        System.out.println("It appears you dont have enough money to pay the order. The order was canceled, you were not refunded any money.");
+                                    }
+                                } else {
+                                    delivered = true;
+                                }
+
+                                if (delivered) {
+                                    user.getOwned().add(order.getItems());
+                                    remove.add(order);
+                                    System.out.println("An order has been delivered and was added to your stash.");
+                                }
+
                             } else {
                                 order.setReadyToDeliver(true);
                                 System.out.println("Your order is being shipped and will arrive the next time you log in.");
@@ -53,11 +70,10 @@ public class Login implements Command {
 
                     user.getOrders().removeAll(remove);
                     Data.save(user);
-                    konzole.setLoggedIn(true);
-                    konzole.setAdmin(false);
-                    konzole.setLoggedUser(user);
-                    id = input;
-                    konzole.removeCommand("login");
+                    console.setLoggedIn(true);
+                    console.setAdmin(false);
+                    console.setLoggedUser(user);
+                    console.removeCommand("login");
                     return "Access granted, welcome.";
                 }
             } else {

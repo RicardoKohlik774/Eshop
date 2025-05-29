@@ -1,6 +1,6 @@
 package Commands;
 
-import Console.Konzole;
+import Console.Console;
 import Store.*;
 import Console.Data;
 
@@ -9,12 +9,12 @@ import java.util.Scanner;
 public class Buy implements Command {
 
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("What product do you want to buy? ");
 
         String name = scanner.nextLine().trim();
-        Predmet item = Stock.Search(name);
+        Product item = Stock.Search(name);
 
         if (item == null) {
             return "This product is not available.";
@@ -29,12 +29,12 @@ public class Buy implements Command {
             String answer = scanner.nextLine().trim();
 
             if (answer.equalsIgnoreCase("y") || answer.equalsIgnoreCase("yes")) {
-                konzole.getLoggedUser().addToCart(item);
+                console.getLoggedUser().addToCart(item);
                 item.setStock(item.getStock() - 1);
                 Data.saveStock();
-                Data.save(konzole.getLoggedUser());
+                Data.save(console.getLoggedUser());
                 System.out.println("Your cart now contains:");
-                for (Predmet p : konzole.getLoggedUser().getCart()) {
+                for (Product p : console.getLoggedUser().getCart()) {
                     System.out.println("- " + p.getName());
                 }
 

@@ -1,53 +1,55 @@
 package Store;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Stock implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private static final ArrayList<Food> jidlo = new ArrayList<>();
-    private static final ArrayList<Obleceni> obleceni = new ArrayList<>();
-    private static final ArrayList<Elektro> elektro = new ArrayList<>();
+    private static final ArrayList<Clothes> CLOTHES = new ArrayList<>();
+    private static final ArrayList<Electro> ELECTRO = new ArrayList<>();
 
     public static void stockStartup() {
-        ArrayList<Predmet> loaded = Console.Data.loadStock();
+        ArrayList<Product> loaded = Console.Data.loadStock();
         if (loaded.isEmpty()) {
             loadDefaultStock();
         } else {
-            for (Predmet p : loaded) {
+            for (Product p : loaded) {
                 if (p instanceof Food) {
                     jidlo.add((Food) p);
-                } else if (p instanceof Obleceni) {
-                    obleceni.add((Obleceni) p);
-                } else if (p instanceof Elektro) {
-                    elektro.add((Elektro) p);
+                } else if (p instanceof Clothes) {
+                    CLOTHES.add((Clothes) p);
+                } else if (p instanceof Electro) {
+                    ELECTRO.add((Electro) p);
                 }
             }
         }
     }
 
     private static void loadDefaultStock() {
-        elektro.add(new Elektro(25, "Sluchatka", true, Typ.APPLIANCE, "5 W/h"));
-        elektro.add(new Elektro(55, "Pracka", true, Typ.APPLIANCE, "20 W/h"));
+        ELECTRO.add(new Electro(25, "Sluchatka", true, Type.ELECTRO));
+        ELECTRO.add(new Electro(55, "Pracka", true, Type.ELECTRO));
 
-        obleceni.add(new Obleceni(22, "Dziny", true, Typ.CLOTHING, "Denim"));
-        obleceni.add(new Obleceni(20, "Tricko", true, Typ.CLOTHING, "cotton"));
+        CLOTHES.add(new Clothes(22, "Dziny", true, Type.CLOTHING));
+        CLOTHES.add(new Clothes(20, "Tricko", true, Type.CLOTHING));
 
-        jidlo.add(new Food(12, "Milk", true, Typ.FOOD, "15.9.2025"));
-        jidlo.add(new Food(20, "Meat", true, Typ.FOOD, "15.9.2025"));
+        jidlo.add(new Food(12, "Milk", true, Type.FOOD));
+        jidlo.add(new Food(20, "Meat", true, Type.FOOD));
 
         Console.Data.saveStock();
     }
 
-    public static Predmet Search(String name) {
+    public static Product Search(String name) {
         for (Food f : getJidlo()) {
             if (f.getName().equalsIgnoreCase(name)) return f;
         }
-        for (Obleceni o : getObleceni()) {
+        for (Clothes o : getObleceni()) {
             if (o.getName().equalsIgnoreCase(name)) return o;
         }
-        for (Elektro e : getElektro()) {
+        for (Electro e : getElektro()) {
             if (e.getName().equalsIgnoreCase(name)) return e;
         }
         return null;
@@ -57,11 +59,11 @@ public class Stock implements Serializable {
         return jidlo;
     }
 
-    public static ArrayList<Obleceni> getObleceni() {
-        return obleceni;
+    public static ArrayList<Clothes> getObleceni() {
+        return CLOTHES;
     }
 
-    public static ArrayList<Elektro> getElektro() {
-        return elektro;
+    public static ArrayList<Electro> getElektro() {
+        return ELECTRO;
     }
 }

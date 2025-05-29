@@ -1,27 +1,27 @@
 package Commands;
 
 import Console.Data;
-import Console.Konzole;
-import Store.Predmet;
+import Console.Console;
+import Store.Product;
 
 import java.util.Scanner;
 
 public class Remove implements Command {
 
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
 
-        if (konzole.getLoggedUser().getCart().isEmpty()) {
+        if (console.getLoggedUser().getCart().isEmpty()) {
             return "Your cart is empty.";
         }
 
         System.out.println("Which product would you like to remove from your cart?");
         String name = scanner.nextLine().trim();
 
-        Predmet remove = null;
+        Product remove = null;
 
-        for (Predmet p : konzole.getLoggedUser().getCart()) {
+        for (Product p : console.getLoggedUser().getCart()) {
             if (p.getName().equalsIgnoreCase(name)) {
                 remove = p;
                 break;
@@ -37,8 +37,8 @@ public class Remove implements Command {
             String confirm = scanner.nextLine().trim();
 
             if (confirm.equalsIgnoreCase("y") || confirm.equalsIgnoreCase("yes")) {
-                konzole.getLoggedUser().getCart().remove(remove);
-                Data.save(konzole.getLoggedUser());
+                console.getLoggedUser().getCart().remove(remove);
+                Data.save(console.getLoggedUser());
                 System.out.println("Product was removed from your cart.");
                 break;
             } else if (confirm.equalsIgnoreCase("n") || confirm.equalsIgnoreCase("no")) {
@@ -51,7 +51,7 @@ public class Remove implements Command {
         }
 
         System.out.println("Current cart contains:");
-        for (Predmet p : konzole.getLoggedUser().getCart()) {
+        for (Product p : console.getLoggedUser().getCart()) {
             System.out.println("- " + p.getName());
         }
 

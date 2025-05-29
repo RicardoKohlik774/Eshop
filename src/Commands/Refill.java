@@ -1,33 +1,31 @@
 package Commands;
 
 import Console.Data;
-import Console.Konzole;
+import Console.Console;
 import Store.*;
-
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Refill implements Command {
 
     @Override
-    public String execute(Konzole konzole) {
+    public String execute(Console console) {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("What product would you like to refill?");
         String productName = sc.nextLine().trim();
 
-        Predmet found = Stock.Search(productName);
+        Product found = Stock.Search(productName);
 
         if (found == null) {
             return "Product was not found.";
         }
 
-        int amountToAdd = 0;
+        int amountToAdd;
         while (true) {
             System.out.print("How many units do you want to add?: ");
-            String input = sc.nextLine().trim();
+            int input = sc.nextInt();
             try {
-                amountToAdd = Integer.parseInt(input);
+                amountToAdd = input;
                 if (amountToAdd <= 0) {
                     System.out.println("You cant add 0 products...");
                 } else {

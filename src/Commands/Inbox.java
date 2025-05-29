@@ -1,6 +1,6 @@
 package Commands;
 
-import Console.Konzole;
+import Console.Console;
 import Console.User;
 import Store.Order;
 
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public class Inbox implements Command {
     @Override
-    public String execute(Konzole konzole) {
-        User user = konzole.getLoggedUser();
+    public String execute(Console console) {
+        User user = console.getLoggedUser();
         ArrayList<Order> orders = user.getOrders();
 
         if (orders.isEmpty()) {

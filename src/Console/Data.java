@@ -1,6 +1,6 @@
 package Console;
 
-import Store.Predmet;
+import Store.Product;
 import Store.Stock;
 
 import java.io.*;
@@ -33,7 +33,7 @@ public class Data {
 
 
     public static void saveStock() {
-        ArrayList<Predmet> all = new ArrayList<>();
+        ArrayList<Product> all = new ArrayList<>();
         all.addAll(Stock.getJidlo());
         all.addAll(Stock.getElektro());
         all.addAll(Stock.getObleceni());
@@ -46,9 +46,9 @@ public class Data {
     }
 
     @SuppressWarnings("unchecked") //MAKES THE WARNING NOT POP UP
-    public static ArrayList<Predmet> loadStock() {
+    public static ArrayList<Product> loadStock() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(STOCK_FILE))) {
-            return (ArrayList<Predmet>) in.readObject();
+            return (ArrayList<Product>) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error loading: " + e.getMessage());
             return new ArrayList<>();
