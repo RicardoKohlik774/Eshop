@@ -14,7 +14,7 @@ public class Browse implements Command  {
         String choice = sc.next();
 
         if (choice.equalsIgnoreCase("food")) {
-            for (Food f : Stock.getJidlo()) {
+            for (Food f : Stock.getFood()) {
                 System.out.println(f.getName() + ", stock: " + f.getStock() + ", price: $" + f.getPrice());
             }
         } else if (choice.equalsIgnoreCase("clothing")) {

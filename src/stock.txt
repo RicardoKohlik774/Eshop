@@ -1,0 +1,6 @@
+FOOD;Milk;12
+FOOD;Meat;20
+CLOTHES;Dziny;22
+CLOTHES;Tricko;20
+ELECTRO;Sluchatka;25
+ELECTRO;Pracka;55

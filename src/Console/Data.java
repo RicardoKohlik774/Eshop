@@ -34,7 +34,7 @@ public class Data {
 
     public static void saveStock() {
         ArrayList<Product> all = new ArrayList<>();
-        all.addAll(Stock.getJidlo());
+        all.addAll(Stock.getFood());
         all.addAll(Stock.getElektro());
         all.addAll(Stock.getObleceni());
 

@@ -1,25 +1,25 @@
 package Store;
 
-import java.io.Serial;
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
+import Console.Data;
 
 public class Stock implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final ArrayList<Food> jidlo = new ArrayList<>();
+    private static final ArrayList<Food> food = new ArrayList<>();
     private static final ArrayList<Clothes> CLOTHES = new ArrayList<>();
     private static final ArrayList<Electro> ELECTRO = new ArrayList<>();
 
     public static void stockStartup() {
-        ArrayList<Product> loaded = Console.Data.loadStock();
+        ArrayList<Product> loaded = Data.loadStock();
         if (loaded.isEmpty()) {
             loadDefaultStock();
         } else {
             for (Product p : loaded) {
                 if (p instanceof Food) {
-                    jidlo.add((Food) p);
+                    food.add((Food) p);
                 } else if (p instanceof Clothes) {
                     CLOTHES.add((Clothes) p);
                 } else if (p instanceof Electro) {
@@ -29,21 +29,45 @@ public class Stock implements Serializable {
         }
     }
 
+    public static void loadStockFromFile(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts.length != 3) {
+                    continue;
+                }
+                String type = parts[0].trim().toUpperCase();
+                String name = parts[1].trim();
+                int price;
+                try {
+                    price = Integer.parseInt(parts[2].trim());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
+
+                if (type.equals("FOOD")) {
+                    food.add(new Food(price, name, Type.FOOD));
+                } else if (type.equals("CLOTHES")) {
+                    CLOTHES.add(new Clothes(price, name, Type.CLOTHING));
+                } else if (type.equals("ELECTRO")) {
+                    ELECTRO.add(new Electro(price, name, Type.ELECTRO));
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Could not read stock file: " + e.getMessage());
+        }
+    }
+
+
+
     private static void loadDefaultStock() {
-        ELECTRO.add(new Electro(25, "Sluchatka", true, Type.ELECTRO));
-        ELECTRO.add(new Electro(55, "Pracka", true, Type.ELECTRO));
-
-        CLOTHES.add(new Clothes(22, "Dziny", true, Type.CLOTHING));
-        CLOTHES.add(new Clothes(20, "Tricko", true, Type.CLOTHING));
-
-        jidlo.add(new Food(12, "Milk", true, Type.FOOD));
-        jidlo.add(new Food(20, "Meat", true, Type.FOOD));
-
-        Console.Data.saveStock();
+        loadStockFromFile("stock.txt");
+        Data.saveStock();
     }
 
     public static Product Search(String name) {
-        for (Food f : getJidlo()) {
+        for (Food f : getFood()) {
             if (f.getName().equalsIgnoreCase(name)) return f;
         }
         for (Clothes o : getObleceni()) {
@@ -55,8 +79,8 @@ public class Stock implements Serializable {
         return null;
     }
 
-    public static ArrayList<Food> getJidlo() {
-        return jidlo;
+    public static ArrayList<Food> getFood() {
+        return food;
     }
 
     public static ArrayList<Clothes> getObleceni() {

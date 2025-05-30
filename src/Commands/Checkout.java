@@ -7,6 +7,7 @@ import Store.Product;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Checkout implements Command {
 
@@ -32,19 +33,36 @@ public class Checkout implements Command {
             return "Checkout cancelled. You were not issued any fees";
         }
 
+        String fullName = "";
         String street = "";
         String city = "";
         String postalCode = "";
         String paymentMethod = "";
         String cardNumber = "";
-        String expirationDate;   //FOR SOME REASON THERE TWO ARE REDUNDANT TO SET ""
+        String expirationDate;
         String cvv;
 
         int step = 1;
 
-        while (step <= 6) {
+        while (step <= 7) {
             switch (step) {
                 case 1: {
+                    System.out.print("Enter your full name (First Last): ");
+                    fullName = scanner.nextLine().trim();
+                    if (fullName.equalsIgnoreCase("cancel")) {
+                        return "Checkout cancelled. You were not issued any fees";
+                    }
+                    Pattern namePattern = Pattern.compile("^[A-Z][a-z]+ [A-Z][a-z]+$");
+                    if (namePattern.matcher(fullName).matches()) {
+                        step++;
+                    } else {
+                        System.out.println("Invalid name format. Use: First Last with capital letters.");
+                        System.out.println();
+                    }
+                    break;
+                }
+
+                case 2: {
                     System.out.print("Enter your street and house number (e.g. Ulicka 123): ");
                     street = scanner.nextLine().trim();
                     if (street.equalsIgnoreCase("cancel")) {
@@ -59,7 +77,7 @@ public class Checkout implements Command {
                     break;
                 }
 
-                case 2: {
+                case 3: {
                     System.out.print("Enter your city (e.g. Ceske Budejovice): ");
                     city = scanner.nextLine().trim();
                     if (city.equalsIgnoreCase("cancel")) {
@@ -78,7 +96,7 @@ public class Checkout implements Command {
                     break;
                 }
 
-                case 3: {
+                case 4: {
                     System.out.print("Enter your postal code (e.g. 12345 or 123 45): ");
                     postalCode = scanner.nextLine().trim();
                     if (postalCode.equalsIgnoreCase("cancel")) {
@@ -97,7 +115,7 @@ public class Checkout implements Command {
                     break;
                 }
 
-                case 4: {
+                case 5: {
                     System.out.print("Select payment method (cash/card): ");
                     paymentMethod = scanner.nextLine().trim().toLowerCase();
                     if (paymentMethod.equalsIgnoreCase("cancel")) {
@@ -111,7 +129,7 @@ public class Checkout implements Command {
                         if (paymentMethod.equals("card")) {
                             step++;
                         } else {
-                            step = 6;
+                            step = 7;
                         }
                     } else {
                         System.out.println("Invalid payment method. Use 'cash' or 'card'.");
@@ -120,7 +138,7 @@ public class Checkout implements Command {
                     break;
                 }
 
-                case 5: {
+                case 6: {
                     System.out.print("Enter your card number (e.g. 1234 1234 1234 1234): ");
                     cardNumber = scanner.nextLine().trim();
                     if (cardNumber.equalsIgnoreCase("cancel")) {
@@ -169,8 +187,9 @@ public class Checkout implements Command {
                     break;
                 }
 
-                case 6: {
+                case 7: {
                     System.out.println("\n===== ORDER SUMMARY =====");
+                    System.out.println("Name: " + fullName);
                     System.out.println("Total Price: $" + total);
                     System.out.println("Delivery Address: " + street + ", " + city + ", " + postalCode);
                     System.out.println("Payment Method: " + paymentMethod);
