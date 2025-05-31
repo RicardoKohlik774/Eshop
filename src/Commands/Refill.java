@@ -5,8 +5,15 @@ import Console.Console;
 import Store.*;
 import java.util.Scanner;
 
+
+/**
+ * Lets the admin add more units of a product to the stock.
+ */
 public class Refill implements Command {
 
+    /**
+     * Asks the admin to choose a product and a quantity, then updates stock if confirmed.
+     */
     @Override
     public String execute(Console console) {
         Scanner sc = new Scanner(System.in);

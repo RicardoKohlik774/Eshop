@@ -1,0 +1,8 @@
+You can interact with this program by typing the avaible command in the console. Such as:
+Browse -----> Displays the current items and their name, stock, and price.
+Buy --------> You can add products to your cart.
+Remove -----> You can remove products from your cart.
+Checkout ---> Asks you to confirm the items in the order, and after inputting valid info, it creates an order that the admin has to confirm and clears your cart.
+Stash ------> Here you can check your current owned items after they arrive.
+Inbox ------> You can check the status of your current orders here.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------

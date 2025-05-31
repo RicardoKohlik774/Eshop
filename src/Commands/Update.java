@@ -8,7 +8,14 @@ import Store.Order;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Allows an admin to update the status of a user's order.
+ */
 public class Update implements Command {
+
+    /**
+     * Asks for a user ID, then lets the admin view and choose an order, then asks him to update its status.
+     */
     @Override
     public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
@@ -42,8 +49,13 @@ public class Update implements Command {
             return "This index is out of range.";
         }
 
-        System.out.print("Enter new status (shipping, cancelled): ");
+        System.out.print("Set the new status of the order (shipping, cancelled): ");
         String newStatus = scanner.nextLine().trim().toLowerCase();
+
+        if (!newStatus.equals("shipping") && !newStatus.equals("cancelled")) {
+            return "Invalid status. You can only set an order to either 'shipping' or 'cancelled'.";
+        }
+
         if (newStatus.equals("cancelled")) {
             Order cancelledOrderNotice = new Order(new ArrayList<>(), "This order was cancelled by admin.");
             orders.set(index, cancelledOrderNotice);

@@ -1,8 +1,13 @@
 package Store;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Represents an order made by a user.
+ * It contains products, status, total price, and other info.
+ */
 public class Order implements Serializable {
     private final Date date;
     private final ArrayList<Product> items;
@@ -11,6 +16,10 @@ public class Order implements Serializable {
     private int totalPrice;
     private String paymentMethod;
 
+    /**
+     * Creates a new order from a cart.
+     * The order status is set to "waiting for confirmation" at first so that the admin has to confirm the order.
+     */
     public Order(ArrayList<Product> kosik, String msg) {
         this.date = new Date();
         this.items = new ArrayList<>(kosik);
@@ -49,17 +58,24 @@ public class Order implements Serializable {
         this.readyToDeliver = readyToDeliver;
     }
 
+    /**
+     * Returns the total price of the order.
+     * Adds up prices of all items.
+     */
     public int getTotalPrice() {
+        int total = 0;
         for (Product p : items) {
-            totalPrice += p.getPrice();
+            total += p.getPrice();
         }
-        return totalPrice;
+        return total;
     }
-
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
 
+    /**
+     * Prints order info like date, status, and products in the order.
+     */
     public void print() {
         System.out.println("Date: " + date);
         System.out.println("Status: " + status);

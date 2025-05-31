@@ -1,0 +1,5 @@
+You can interact with this program by typing the avaible command in the console. Such as:
+Browse ---> Displays the current items and their name, stock, and price.
+Refill ---> Lets you refill the stock of an item.
+Update ---> You can set the current status of a users order to either shipping (makes it deliver to the user) or cancelled (cancels the order).
+-------------------------------------------------------------------------------------------------------------------------------------------------

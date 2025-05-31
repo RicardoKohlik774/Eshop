@@ -9,8 +9,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Handles the checkout process to place an order.
+ * It collects delivery and payment details, checks if they are valid,
+ * and then creates an order if everything is correct.
+ */
 public class Checkout implements Command {
 
+    /**
+     * Guides the user through checking out their cart.
+     * Then asks for name, address, payment method, and (optional) credit card details.
+     * The user can cancel or go back at any step.
+     * When the inputted information is confirmed, an order is created and the cart gets cleared.
+     */
     @Override
     public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
@@ -63,7 +74,7 @@ public class Checkout implements Command {
                 }
 
                 case 2: {
-                    System.out.print("Enter your street and house number (e.g. Ulicka 123): ");
+                    System.out.print("Enter your street and house number (e.g. Street 123): ");
                     street = scanner.nextLine().trim();
                     if (street.equalsIgnoreCase("cancel")) {
                         return "Checkout cancelled. You were not issued any fees";
@@ -78,7 +89,7 @@ public class Checkout implements Command {
                 }
 
                 case 3: {
-                    System.out.print("Enter your city (e.g. Ceske Budejovice): ");
+                    System.out.print("Enter your city (e.g. New York): ");
                     city = scanner.nextLine().trim();
                     if (city.equalsIgnoreCase("cancel")) {
                         return "Checkout cancelled. You were not issued any fees";

@@ -6,8 +6,16 @@ import Console.Data;
 
 import java.util.Scanner;
 
+/**
+ * Handles buying a product by inputting its name.
+ * It checks if its in stock, asks for confirmation, and adds the item to the user's cart.
+ */
 public class Buy implements Command {
 
+    /**
+     * Lets the user type the product name, confirms the choice,
+     * and updates the cart and stock if accepted.
+     */
     @Override
     public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);

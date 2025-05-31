@@ -6,8 +6,14 @@ import Store.Product;
 
 import java.util.Scanner;
 
+/**
+ * Removes a selected product from the logged user's cart.
+ */
 public class Remove implements Command {
 
+    /**
+     * Asks the user which product to remove, confirms the choice, and updates the cart.
+     */
     @Override
     public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);

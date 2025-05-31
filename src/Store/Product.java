@@ -3,6 +3,10 @@ package Store;
 import java.io.Serial;
 import java.io.Serializable;
 
+/**
+ * Represents a product in the shop. It has a name, price, type, and stock count.
+ */
+
 public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;

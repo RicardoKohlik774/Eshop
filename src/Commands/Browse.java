@@ -5,9 +5,16 @@ import java.util.Scanner;
 import Console.Console;
 import Store.*;
 
-public class Browse implements Command  {
+/**
+ * Lets the user view available products in different categories.
+ * Shows food, clothing, or appliance items from the stock.
+ */
+public class Browse implements Command {
     Scanner sc = new Scanner(System.in);
 
+    /**
+     * Asks the user for a category and lists all items in that group with the stats like name, stock, and price.
+     */
     @Override
     public String execute(Console console) {
         System.out.println("What would you like to browse? (food,clothing,appliances)");

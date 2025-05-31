@@ -4,6 +4,9 @@ import java.io.*;
 import java.util.ArrayList;
 import Console.Data;
 
+/**
+ * Handles loading and managing the stock in the shop.
+ */
 public class Stock implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -12,6 +15,10 @@ public class Stock implements Serializable {
     private static final ArrayList<Clothes> CLOTHES = new ArrayList<>();
     private static final ArrayList<Electro> ELECTRO = new ArrayList<>();
 
+    /**
+     * Loads the stock from file.
+     * If it doesn't have any saved data, loads the default stock products.
+     */
     public static void stockStartup() {
         ArrayList<Product> loaded = Data.loadStock();
         if (loaded.isEmpty()) {
@@ -29,6 +36,9 @@ public class Stock implements Serializable {
         }
     }
 
+    /**
+     * Loads stock data from a text file.
+     */
     public static void loadStockFromFile(String filename) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
@@ -60,12 +70,17 @@ public class Stock implements Serializable {
     }
 
 
-
+    /**
+     * Loads the default stock and saves it.
+     */
     private static void loadDefaultStock() {
         loadStockFromFile("stock.txt");
         Data.saveStock();
     }
 
+    /**
+     * Looks up a product by its name in one of the categories.
+     */
     public static Product Search(String name) {
         for (Food f : getFood()) {
             if (f.getName().equalsIgnoreCase(name)) return f;

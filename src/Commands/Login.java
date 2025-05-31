@@ -8,10 +8,18 @@ import Store.Order;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles user login.
+ * Also processes any orders when the user logs in.
+ */
 public class Login implements Command {
 
+    /**
+     * Logs in the user or admin. Creates a new user if not found.
+     * Also handles the delivery of ready orders and money deduction when paying with cash.
+     */
     @Override
-    public String execute(Console console) {           //MIGHT WANNA REWRITE THEM IF ELSE'S NGL
+    public String execute(Console console) {
         Scanner scanner = new Scanner(System.in);
         String adminId = "00000000";
         while (true) {
